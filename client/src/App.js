@@ -106,10 +106,7 @@ function App() {
 
           <div className="above-main"></div>
           <div className="main">
-            <h1 id="time">
-              <GetTime />
-            </h1>
-            <h2 id="greeting">Good Evening, Sam</h2>
+            <GetTime />
           </div>
           <div className="below-main">
             <h3 id="question">What is your main focus for today?</h3>
