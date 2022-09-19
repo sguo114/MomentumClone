@@ -3,7 +3,8 @@ import React, { useEffect, useState } from "react";
 export default function GetTime() {
   // initiate time to be user current time
   const [time, setTime] = useState(new Date());
-  const [guest, setGuest] = useState("Guest");
+  // const [guest, setGuest] = useState("Guest");
+  const guest = "Guest";
 
   // update time every second using setInterval
   useEffect(() => {
