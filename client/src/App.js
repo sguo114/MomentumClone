@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import "./App.css";
 import GetImage from "./requests/GetImage";
 import GetQuote from "./requests/GetQuote";
@@ -6,75 +6,84 @@ import GetTime from "./requests/GetTime";
 import GetWeather from "./requests/GetWeather";
 
 function App() {
-  let today = new Date();
+  const [image, setImage] = useState(
+    localStorage.getItem("image") &&
+      localStorage.getItem("image") !== "undefined"
+      ? JSON.parse(localStorage.getItem("image"))
+      : null
+  );
+  const [quote, setQuote] = useState(
+    localStorage.getItem("quote") &&
+      localStorage.getItem("quote") !== "undefined"
+      ? JSON.parse(localStorage.getItem("quote"))
+      : null
+  );
+  const [weather, setWeather] = useState(
+    localStorage.getItem("weather") &&
+      localStorage.getItem("weather") !== "undefined"
+      ? JSON.parse(localStorage.getItem("weather"))
+      : null
+  );
 
-  const [image, setImage] = useState();
-  const [quote, setQuote] = useState();
-  const [temp, setTemp] = useState(25);
-  const [loading, setLoading] = useState(true);
-  const [currDate, setCurrDate] = useState({
+  let today = new Date();
+  const currDate = {
     day: today.getDay(),
     month: today.getMonth(),
     year: today.getFullYear(),
-  });
+  };
 
-  console.log("start", image, quote, currDate);
+  if (getNewData()) {
+    async function fetchData() {
+      if (!image || image === "undefined") {
+        const imageData = await GetImage();
+        setImage(imageData);
+      }
+      if (!quote || quote === "undefined") {
+        const quoteData = await GetQuote();
+        setQuote(quoteData);
+      }
+      if (!weather || weather === "undefined") {
+        var lat, lon;
+        // obtain latitude and longitude from geolocation if able to
+        if (navigator.geolocation) {
+          navigator.geolocation.getCurrentPosition(
+            async (data) => {
+              lat = data.coords.latitude;
+              lon = data.coords.longitude;
+              setWeather(await GetWeather(lat, lon));
+            },
+            async () => {
+              console.log("Location access denied");
+              lat = 40.7128;
+              lon = -74.006;
+              setWeather(await GetWeather(lat, lon));
+            }
+          );
+        }
+      }
+    }
+    fetchData();
+    localStorage.setItem("lastDay", new Date());
+  }
 
-  useEffect(() => {
+  function getNewData() {
     let storedDate = new Date(localStorage.getItem("lastDay"));
-    if (
+    return (
       currDate.day !== storedDate.getDay() ||
       currDate.month !== storedDate.getMonth() ||
       currDate.year !== storedDate.getFullYear() ||
       !localStorage.getItem("image") ||
-      !localStorage.getItem("quote")
-    ) {
-      console.log("if", image, quote);
-      GetImage()
-        .then((res) => {
-          console.log("inside Img", res);
-          return res;
-        })
-        .then((imgData) => {
-          console.log("second then img", imgData);
-          setImage(imgData);
-          localStorage.setItem("image", imgData);
-          console.log("after set img", image);
-        });
-
-      GetQuote()
-        .then((res) => {
-          console.log("inside quote", res);
-          return res;
-        })
-        .then((quoteData) => {
-          setQuote(quoteData);
-          localStorage.setItem("quote", JSON.stringify(quoteData));
-          setLoading(false);
-          console.log("after check quote", quote);
-        });
-
-      localStorage.setItem("lastDay", new Date());
-    } else if (!image || !quote) {
-      console.log("else if", image, quote);
-      setImage(JSON.parse(localStorage.getItem("image")));
-      setQuote(JSON.parse(localStorage.getItem("quote")));
-
-      console.log("else if", image, quote);
-      setLoading(false);
-    } else {
-      console.log("else");
-      setLoading(false);
-      return;
-    }
-  }, []);
-  let x = GetWeather();
-  console.log(x);
-  console.log(image, quote, image ? true : false);
+      localStorage.getItem("image") === "undefined" ||
+      !localStorage.getItem("quote") ||
+      localStorage.getItem("quote") === "undefined" ||
+      !localStorage.getItem("weather") ||
+      localStorage.getItem("weather") === "undefined"
+    );
+  }
 
   return (
     <div className="App">
-      {loading ? (
+      {!image || image === "undefined" ? (
         <h2>Loading...</h2>
       ) : (
         <div
@@ -86,10 +95,13 @@ function App() {
           }}
           className="container h-screen"
         >
-          {temp && (
+          {weather && (
             <div className="top-row">
               <div className="top-left">Links</div>
-              <div className="top-right">{temp}°F</div>
+              <div className="top-right">
+                <div>{weather.temp}°F</div>
+                <span className="city">{weather.city}</span>
+              </div>
             </div>
           )}
 

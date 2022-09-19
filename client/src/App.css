@@ -21,7 +21,14 @@
     font-size: 125%;
 }
 .top-right{
-    font-size: 200%;
+    display: flex;
+    flex-direction: column;
+    font-size: 175%;
+    align-items: center;
+}
+.top-right > .city {
+    margin-top: -10px;
+    font-size: 40%;
 }
 
 .main{

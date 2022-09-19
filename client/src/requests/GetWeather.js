@@ -1,29 +1,20 @@
-export default async function GetWeather() {
-  var lat, lon;
-
-  // obtain latitude and longitude from geolocation if able to
-  if (navigator.geolocation) {
-    navigator.geolocation.getCurrentPosition(
-      (data) => {
-        console.log(data.coords);
-        lat = data.coords.latitude;
-        lon = data.coords.longitude;
-        return getData(lat, lon);
-      },
-      () => {
-        console.log("Location access denied");
-        lat = 40.7128;
-        lon = -74.006;
-        return getData(lat, lon);
-      }
-    );
+export default async function GetWeather(lat, lon) {
+  if (
+    localStorage.getItem("temp") &&
+    localStorage.getItem("temp") !== "undefined"
+  ) {
+    return {
+      temp: Math.round(localStorage.getItem("temp"), 2),
+      city: localStorage.getItem("city"),
+    };
   }
-  const getData = async (lat, lon) => {
-    const response = await fetch(
-      `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&units=imperial&appid=${process.env.REACT_APP_OPENWEATHER_API_KEY}`
-    );
-    const data = await response.json();
-    console.log(data);
-    return data;
-  };
+
+  const response = await fetch(
+    `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&units=imperial&appid=${process.env.REACT_APP_OPENWEATHER_API_KEY}`
+  );
+  const data = await response.json();
+  localStorage.setItem("temp", Math.round(data.main.temp, 2));
+  localStorage.setItem("city", data.name);
+  console.log(data);
+  return { temp: Math.round(data.main.temp, 2), city: data.name };
 }
