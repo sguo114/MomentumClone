@@ -1,5 +1,4 @@
 // Fetch random image from selected collection from unsplash and return json
-
 export default async function GetImage() {
   if (
     localStorage.getItem("image") &&
