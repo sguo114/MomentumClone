@@ -1,50 +1,129 @@
 *{
     color: white;
+    text-shadow: -.3px 0 black, 0 .3px black, .3px 0 black, 0 -.3px black;
 }
 
+/* Section styling */
 .container{
     display: flex;
     text-align: center;
-    justify-content: center;
-    align-items: center;
     flex-flow: column wrap;
 }
 
+.top-row{
+    height: 60px;
+    display: flex;
+    justify-content: space-between;
+    flex: 0 0 auto;
+    margin-top: 1%; 
+    margin-left: 2%;
+    margin-right: 2%;
+    font-size: 125%;
+}
+.top-right{
+    font-size: 200%;
+}
+
 .main{
-    margin-top: 10%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin-top: 5%;
     flex-grow:1;
 }
 
-.quote{
-    margin-bottom: 2%;
+.below-main{
+    margin-bottom: 5%;
 }
+
+.bottom-row{
+    height: 30px;
+    display: flex;
+    justify-content: space-between;
+    margin-left: 2%;
+    margin-right: 2%;
+    font-size: 100%;
+    margin-bottom: 3%;
+}
+
+
+/* Text Styling */
 
 h1{
     font-size: 1000%;
     margin-bottom:-5%;
+    text-shadow: -.3px 0 black, 0 .3px black, .3px 0 black, 0 -.3px black;
 }
 
 h2{
     font-size:350%;
+    text-shadow: -.3px 0 black, 0 .3px black, .3px 0 black, 0 -.3px black;
 }
 
 h3{
     font-size: 230%;
+    text-shadow: -.3px 0 black, 0 .3px black, .3px 0 black, 0 -.3px black;
 }
 
 #quote{
     font-size: 125%;
+    text-shadow: -.3px 0 black, 0 .3px black, .3px 0 black, 0 -.3px black;
 }
 
 #author{
     font-size: 100%;
 }
 
+#photographer{
+    font-size: 100%;
+    color: whitesmoke;
+    text-shadow: -.3px 0 black, 0 .3px black, .3px 0 black, 0 -.3px black;
+}
+
 input{
-    width: 500px;
+    width: 450px;
+}
+
+#author{
+    display: none;
+}
+
+.quote:hover #author{
+    display: inline-block;
+}
+
+.small-screen{
+    display: none;
+}
+.large-screen{
+    display: flex;
+    flex-direction: column;
 }
 
 @media screen and (max-width:450px){
+    .small-screen{
+        display: flex;
+        flex-direction: column;
+        margin-top: 50px;
+    }
+    .large-screen{
+        display: none;
+    }
+
+    .below-main{
+        margin-bottom: 0%;
+    }
+
+    .bottom-row{
+        height: 60px;
+        display: flex;
+        justify-content: space-between;
+        margin-left: 2%;
+        margin-right: 2%;
+        font-size: 80%;
+        margin-bottom: 3%;
+    }
+
     h1{
         margin-bottom: -5%;
         font-size: 60px;
@@ -56,12 +135,12 @@ input{
     }
     
     h3{
-        margin-top: 300px;
+        margin-top: 250px;
         font-size: 135%;
     }
 
     input{
-        width: 300px;
+        width: 250px;
     }
     
 }
