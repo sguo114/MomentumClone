@@ -4,6 +4,9 @@ import GetImage from "./requests/GetImage";
 import GetQuote from "./requests/GetQuote";
 import GetTime from "./requests/GetTime";
 import GetWeather from "./requests/GetWeather";
+import { Modal, Button } from "react-bootstrap";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faTrash } from "@fortawesome/free-solid-svg-icons";
 
 function App() {
   // Set up state for daily image, quote and weather data. And set up reference to current date
@@ -19,8 +22,13 @@ function App() {
       ? JSON.parse(localStorage.getItem("quote"))
       : null
   );
-
   const [weather, setWeather] = useState({});
+  const [toDos, setToDos] = useState(
+    localStorage.getItem("todos")
+      ? JSON.parse(localStorage.getItem("todos"))
+      : []
+  );
+  const [open, setOpen] = useState(false);
 
   let today = new Date();
   const currDate = {
@@ -80,6 +88,48 @@ function App() {
     );
   }
 
+  function addToDo(e) {
+    if (e.keyCode === 13) {
+      let tasks = [
+        ...JSON.parse(localStorage.getItem("todos") || "[]"),
+        { "todo": e.target.value, "completed": false },
+      ];
+      localStorage.setItem("todos", JSON.stringify(tasks));
+      setToDos(tasks);
+      openModal();
+      e.target.value = "";
+    }
+  }
+
+  function toDoCompleted(e) {
+    let tasks = [...JSON.parse(localStorage.getItem("todos"))];
+    tasks.forEach((task) => {
+      if (task.todo === e.target.name) {
+        task.completed = !task.completed;
+      }
+    });
+    localStorage.setItem("todos", JSON.stringify(tasks));
+    setToDos(tasks);
+  }
+
+  function deleteToDo(e) {
+    let tasks = [...JSON.parse(localStorage.getItem("todos"))];
+    tasks.forEach((task) => {
+      if (task.todo === e.target.parentNode.parentNode.firstChild.name) {
+        tasks.splice(tasks.indexOf(task), 1);
+      }
+    });
+    localStorage.setItem("todos", JSON.stringify(tasks));
+    setToDos(tasks);
+  }
+
+  function openModal() {
+    setOpen(true);
+  }
+  function closeModal() {
+    setOpen(false);
+  }
+
   return (
     <div className="App">
       {!image || image === "undefined" ? (
@@ -117,6 +167,7 @@ function App() {
                 border: "none",
                 borderBottom: "3px solid white",
               }}
+              onKeyDown={addToDo}
             ></input>
             {quote && (
               <div className="quote bottom-center small-screen">
@@ -140,7 +191,55 @@ function App() {
               </div>
             )}
             <div className="bottom-right">
-              <div id="todo">To Do</div>
+              <div id="todo" onClick={openModal}>
+                Todo
+              </div>
+              <Modal
+                show={open}
+                onHide={closeModal}
+                size="sm"
+                aria-labelledby="contained-modal-title-vcenter"
+                dialogClassName="custom-dialog"
+                centered
+              >
+                <Modal.Title>My To Do's</Modal.Title>
+                <Modal.Body>
+                  <ul style={{ padding: "0" }}>
+                    {toDos.map((toDo) => (
+                      <li key={toDo.todo}>
+                        <input
+                          type="checkbox"
+                          id={toDo.todo}
+                          name={toDo.todo}
+                          checked={toDo.completed}
+                          onChange={toDoCompleted}
+                          style={{
+                            width: "10px",
+                            height: "10px",
+                            marginRight: "5px",
+                          }}
+                        ></input>
+                        <label
+                          htmlFor={toDo.todo}
+                          className={toDo.completed ? "striked" : "not-striked"}
+                        >
+                          {toDo.todo}
+                        </label>
+                        <FontAwesomeIcon
+                          className="trash-can"
+                          icon={faTrash}
+                          onClick={deleteToDo}
+                        />
+                      </li>
+                    ))}
+                  </ul>
+                </Modal.Body>
+                <Modal.Footer style={{ background: "rgb(54, 53, 53)" }}>
+                  <Button variant="secondary" onClick={closeModal}>
+                    Close
+                  </Button>
+                </Modal.Footer>
+              </Modal>
             </div>
           </div>
         </div>

@@ -70,12 +70,13 @@ export default function GetTime() {
       <Modal
         show={open}
         onHide={closeModal}
-        size="lg"
+        size="sm"
         aria-labelledby="contained-modal-title-vcenter"
         centered
       >
         <Form onSubmit={handleSubmit}>
           <Modal.Body>
+            <div style={{ color: "black" }}>Your Name?</div>
             <Form.Group>
               <Form.Label></Form.Label>
               <Form.Control
