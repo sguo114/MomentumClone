@@ -1,9 +1,17 @@
 # A Google Momentum Clone
 [Guo-Momentum-Clone](https://guo-momentum.netlify.app/)
+
 Built with react and bootstrap, this was a fun project to play around with some web apis and local storage logic to imitate some of Google Momentum's functions.
 
-![image](https://user-images.githubusercontent.com/100171223/191363156-7faa04e4-e20c-4bfa-97e8-0e40bf6a3ecd.png)
+This app provides:
+- the current time
+- a daily image, the photographer, and a link to their profile
+- a daily quote and the author
+- current temperature (defaults to New York unless geolocation is turned on)
 
+Using local storage to remember the last day visited, the app will provide a new image and quote only if it is a new day or local storage is cleared. Weather is updated on each render. 
+
+![image](https://user-images.githubusercontent.com/100171223/191363156-7faa04e4-e20c-4bfa-97e8-0e40bf6a3ecd.png)
 
 
 ## Tools and Technologies
