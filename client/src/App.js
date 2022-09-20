@@ -146,7 +146,14 @@ function App() {
         >
           {weather && (
             <div className="top-row">
-              <div className="top-left">My Clone</div>
+              <a
+                href="https://chrome.google.com/webstore/detail/momentum/laookkfknpbbblfpciffpaejjkokdgca"
+                style={{ textDecoration: "none" }}
+                target="_blank"
+                rel="noreferrer"
+              >
+                <div className="top-left">Momentum</div>
+              </a>
               <div className="top-right">
                 <div>{weather.temp}°F</div>
                 <span className="city">{weather.city}</span>
@@ -202,8 +209,12 @@ function App() {
                 dialogClassName="custom-dialog"
                 centered
               >
-                <Modal.Title>My To Do's</Modal.Title>
-                <Modal.Body>
+                <Modal.Title
+                  style={{ background: "rgb(54, 53, 53)", paddingLeft: "5px" }}
+                >
+                  My To Do's
+                </Modal.Title>
+                <Modal.Body style={{ background: "rgb(54, 53, 53)" }}>
                   <ul style={{ padding: "0" }}>
                     {toDos.map((toDo) => (
                       <li key={toDo.todo}>

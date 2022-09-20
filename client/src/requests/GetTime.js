@@ -76,7 +76,7 @@ export default function GetTime() {
       >
         <Form onSubmit={handleSubmit}>
           <Modal.Body>
-            <div style={{ color: "black" }}>Your Name?</div>
+            <div style={{ color: "black" }}>Change Name?</div>
             <Form.Group>
               <Form.Label></Form.Label>
               <Form.Control

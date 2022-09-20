@@ -122,14 +122,6 @@ input{
     flex-direction: column;
 }
 
-.modal-content, .modal-body {
-    background: rgb(54, 53, 53);
-    background-color: rgb(54, 53, 53);
-}
-.modal-title {
-    background: rgb(54, 53, 53);
-    padding-left: 5px;
-}
 .modal-footer{
     height: 20%;
 }
