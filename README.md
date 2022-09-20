@@ -8,6 +8,8 @@ This app provides:
 - a daily image, the photographer, and a link to their profile
 - a daily quote and the author
 - current temperature (defaults to New York unless geolocation is turned on)
+- ability to customize name
+- ability to add a to-do list, cross off to-do items, and remove to-do items
 
 Using local storage to remember the last day visited, the app will provide a new image and quote only if it is a new day or local storage is cleared. Weather is updated on each render. 
 
