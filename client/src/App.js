@@ -92,7 +92,7 @@ function App() {
             backgroundSize: "cover",
             marginTop: "0px",
           }}
-          className="container h-screen"
+          className="clone-container h-screen"
         >
           {weather && (
             <div className="top-row">
