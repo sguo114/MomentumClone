@@ -8,11 +8,14 @@ Built with react and bootstrap, this was a fun project to play around with some 
 
 ## Tools and Technologies
 React
+
 Bootstrap
 
 ### API's
 [Unsplash](https://unsplash.com/) 
+
 [OpenWeatherMap](https://openweathermap.org/)
+
 [Forismatic](https://forismatic.com/en/api/)
 
 ### Cloning this project
